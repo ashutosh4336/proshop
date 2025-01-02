@@ -1,0 +1,18 @@
+model Product {
+    id          Int      @id @default(autoincrement())
+    name        String
+    slug        String   @unique
+    // category  Category @relation(fields: [categoryId], references: [id])
+    category    String
+    images      String[]
+    brand       String
+    description String
+    stock       Int
+    price       Float
+    rating      Float
+    numReviews  Int
+    isFeatured  Boolean
+    banner      String?
+    createdAt   DateTime @default(now())
+    updatedAt   DateTime @updatedAt
+}
