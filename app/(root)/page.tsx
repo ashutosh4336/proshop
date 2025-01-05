@@ -1,21 +1,24 @@
 import ProductList from '@/components/Shared/Products/ProductList';
 import { Button } from '@/components/ui/button';
-import sampleData from '@/db/sample-data';
+import { LATEST_PRODUCT_LIMIT } from '@/constants';
+import { getProducts } from '@/lib/actions/product';
 
 export const metadata = {
   title: 'Home',
 };
 
-export default function Home() {
-  // await delay(2000);
+export default async function Home() {
+  const products = await getProducts({
+    sortBy: 'desc',
+    limit: LATEST_PRODUCT_LIMIT,
+    offset: 0,
+  });
+
+  // console.log(products);
 
   return (
     <section>
-      <ProductList
-        data={sampleData.products}
-        title='Featured Products'
-        limit={4}
-      />
+      <ProductList data={products} title='Featured Products' limit={4} />
       <div className='flex justify-center'>
         <Button asChild variant={'outline'}>
           View All Products

@@ -1,0 +1,15 @@
+model Banner {
+    id         Int       @id @default(autoincrement())
+    name       String?
+    isFeatured Boolean
+    type       String?
+    fromDate   DateTime?
+    toDate     DateTime?
+    url        String?
+    category   Ctaegory  @default(null) @relation(fields: [categoryId], references: [id])
+    productId  Product?  @default(null) @relation("ProductFile", fields: [productId], references: [id])
+    campaignId Campaign? @default(null) @relation("CampaignFile", fields: [campaignId], references: [id])
+    createdBy  User?     @default(null) @relation("CreatedBy", fields: [createdById], references: [id])
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+}

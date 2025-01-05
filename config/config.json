@@ -1,0 +1,23 @@
+{
+  "development": {
+    "appVersion": "1.0.0",
+    "author": "@ashutosh4336",
+    "appName": "ProStore",
+    "appDescription": "Modern E-Commerce Platform with NextJS",
+    "latestProductLimit": 10
+  },
+  "production": {
+    "appVersion": "1.0.0",
+    "author": "@ashutosh4336",
+    "appName": "ProStore",
+    "appDescription": "Modern E-Commerce Platform with NextJS",
+    "latestProductLimit": 10
+  },
+  "stage": {
+    "appVersion": "1.0.0",
+    "author": "@ashutosh4336",
+    "appName": "ProStore",
+    "appDescription": "Modern E-Commerce Platform with NextJS",
+    "latestProductLimit": 10
+  }
+}

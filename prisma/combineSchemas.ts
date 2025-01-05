@@ -3,7 +3,7 @@ import * as path from 'path';
 
 const MODELS_DIR = path.join(__dirname, 'models');
 const OUTPUT_FILE = path.join(__dirname, 'schema.prisma');
-const dependencyOrder = ['User', 'Product']; // Adjust based on dependencies
+const dependencyOrder = ['Product']; // Adjust based on dependencies
 
 const HEADER = `
 // Generated schema.prisma
@@ -11,6 +11,7 @@ const HEADER = `
 
 generator client {
   provider = "prisma-client-js"
+  previewFeatures = ["driverAdapters"]
 }
 
 datasource db {
@@ -39,19 +40,23 @@ const combineSchemas = (): void => {
     }
 
     // Sort files based on dependency order
-    const sortedFiles = files.sort((a, b) => {
-      const aIndex = dependencyOrder.indexOf(a.replace('.prisma', ''));
-      const bIndex = dependencyOrder.indexOf(b.replace('.prisma', ''));
-      return (
-        (aIndex !== -1 ? aIndex : Infinity) -
-        (bIndex !== -1 ? bIndex : Infinity)
-      );
-    });
+    const selectedSortedFiles = files
+      .filter((schema) =>
+        dependencyOrder.includes(schema.replace('.prisma', ''))
+      )
+      .sort((a, b) => {
+        const aIndex = dependencyOrder.indexOf(a.replace('.prisma', ''));
+        const bIndex = dependencyOrder.indexOf(b.replace('.prisma', ''));
+        return (
+          (aIndex !== -1 ? aIndex : Infinity) -
+          (bIndex !== -1 ? bIndex : Infinity)
+        );
+      });
 
-    console.log('Processing files in order:', sortedFiles);
+    console.log('Processing files in order:', selectedSortedFiles);
 
     // Read and concatenate file contents
-    const models: string = files
+    const models: string = selectedSortedFiles
       .map((file: string) => {
         const filePath = path.join(MODELS_DIR, file);
         console.log(`Reading: ${filePath}`);
@@ -68,7 +73,19 @@ const combineSchemas = (): void => {
   } catch (error) {
     console.error('Error combining schemas:', (error as Error).message);
     process.exit(1);
+  } finally {
+    removeCompiledJSFiles();
   }
+};
+
+const removeCompiledJSFiles = () => {
+  const files = fs.readdirSync(__dirname);
+
+  files.forEach((file) => {
+    if (file === 'combineSchemas.js') {
+      fs.unlinkSync(path.join(__dirname, file));
+    }
+  });
 };
 
 // Run the script

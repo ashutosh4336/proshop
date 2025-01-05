@@ -1,0 +1,16 @@
+model Campaign {
+    id          Int          @id @default(autoincrement())
+    name        String?
+    slug        String       @unique
+    description String
+    isFeatured  Boolean
+    type        String?
+    fromDate    DateTime?
+    toDate      DateTime?
+    url         String?
+    image       StaticFile[] @relation("CampaignFile", fields: [imageId], references: [id])
+    category    Ctaegory     @default(null) @relation(fields: [categoryId], references: [id])
+    createdBy   User?        @default(null) @relation("CreatedBy", fields: [createdById], references: [id])
+    createdAt   DateTime     @default(now())
+    updatedAt   DateTime     @updatedAt
+}

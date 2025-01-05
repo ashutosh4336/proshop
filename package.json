@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "combine:models": "npx tsc ./prisma/combineSchemas.ts && node ./prisma/combineSchemas.js && prisma format && rimraf -I ./prisma/combineSchemas.js",
+    "postinstall": "combine:models && prisma generate",
+    "combine:models": "npx tsc ./prisma/combineSchemas.ts && node ./prisma/combineSchemas.js && prisma format",
     "trm": "rimraf --help"
   },
   "dependencies": {
@@ -22,7 +23,8 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "tailwind-merge": "^2.6.0",
-    "tailwindcss-animate": "^1.0.7"
+    "tailwindcss-animate": "^1.0.7",
+    "zod": "^3.24.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

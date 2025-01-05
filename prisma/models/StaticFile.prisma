@@ -1,0 +1,14 @@
+model StaticFile {
+    id         Int       @id @default(autoincrement())
+    name       String?
+    givenName  String?
+    type       String?
+    size       Float?
+    url        String?
+    path       String?
+    productId  Product?  @default(null) @relation("ProductFile", fields: [productId], references: [id])
+    bannerId   Banner?   @default(null) @relation("BannerFile", fields: [bannerId], references: [id])
+    campaignId Campaign? @default(null) @relation("CampaignFile", fields: [campaignId], references: [id])
+    createdAt  DateTime  @default(now())
+    updatedAt  DateTime  @updatedAt
+}

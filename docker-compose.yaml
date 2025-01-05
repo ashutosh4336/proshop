@@ -1,0 +1,35 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - proshop_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: proshop
+      POSTGRES_USER: ashutosh4336
+      POSTGRES_PASSWORD: supersecret
+    ports:
+      - '5532:5432'
+    container_name: postgresProshopDB
+    networks:
+      - proshop_network
+
+  pgadmin:
+    image: dpage/pgadmin4
+    environment:
+      PGADMIN_DEFAULT_EMAIL: 'ashutosh@thehttp.in'
+      PGADMIN_DEFAULT_PASSWORD: 'supersecret-pgadmin'
+
+    ports:
+      - '5533:80'
+    container_name: pgAdminProshop
+    depends_on:
+      - db
+    networks:
+      - proshop_network
+
+volumes:
+  proshop_data:
+
+networks:
+  proshop_network:
+    driver: bridge
