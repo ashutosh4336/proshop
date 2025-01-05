@@ -18,11 +18,10 @@ export default async function Home() {
 
   return (
     <section>
-      <ProductList data={products} title='Featured Products' limit={4} />
+      <ProductList data={products} title='Newest Arrival' limit={4} />
+
       <div className='flex justify-center'>
-        <Button asChild variant={'outline'}>
-          View All Products
-        </Button>
+        <Button>View All Products</Button>
       </div>
     </section>
   );
